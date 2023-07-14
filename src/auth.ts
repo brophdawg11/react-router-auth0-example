@@ -13,16 +13,16 @@ interface AuthProvider {
 const AUTH0_DOMAIN = "YOUR-AUTH0-DOMAIN-HERE";
 const AUTH0_CLIENT_ID = "YOUR-AUTH0-CLIENT-ID-HERE";
 
-let auth0Client: Awaited<ReturnType<typeof createAuth0Client>>;
+let auth0ClientPromise: ReturnType<typeof createAuth0Client>;
 
-async function getClient() {
-  if (!auth0Client) {
-    auth0Client = await createAuth0Client({
+function getClient() {
+  if (!auth0ClientPromise) {
+    auth0ClientPromise = createAuth0Client({
       domain: AUTH0_DOMAIN,
       clientId: AUTH0_CLIENT_ID,
     });
   }
-  return auth0Client;
+  return auth0ClientPromise;
 }
 
 export const auth0AuthProvider: AuthProvider = {
